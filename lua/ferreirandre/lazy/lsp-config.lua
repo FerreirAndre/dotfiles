@@ -9,7 +9,7 @@ return {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "gopls", "clangd" },
+                ensure_installed = { "lua_ls", "gopls", "clangd", "ast_grep", "eslint", "cssls" },
             })
         end,
     },
@@ -20,6 +20,16 @@ return {
             local lspconfig = require("lspconfig")
             --            local on_attach = require("plugins.configs.lspconfig").on_attach
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
+            --            lspconfig.jdtls.setup({})
+            lspconfig.eslint.setup({
+                capabilities = capabilities
+            })
+            lspconfig.cssls.setup({
+                capabilities = capabilities
+            })
+            lspconfig.ast_grep.setup({
+                capabilities = capabilities
+            })
             lspconfig.lua_ls.setup({
                 capabilities = capabilities,
             })
@@ -29,8 +39,8 @@ return {
             lspconfig.gopls.setup({
                 --                on_attach = on_attach,
                 capabilities = capabilities,
-                cmd = {"gopls"},
-                filetypes = {"go","gomod","gowork","gotmpl"},
+                cmd = { "gopls" },
+                filetypes = { "go", "gomod", "gowork", "gotmpl" },
                 settings = {
                     completeUnimported = true,
                 }
